@@ -1,0 +1,5 @@
+.DS_STORE
+node_modules/
+src/style/style.css
+bin/
+dist/
