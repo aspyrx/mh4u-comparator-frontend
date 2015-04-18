@@ -16,14 +16,14 @@ var Weapons = {
         },
         skills: {
             general: {
-                "attack-up-s": "Attack Up (S)",
-                "attack-up-m": "Attack Up (M)",
-                "attack-up-l": "Attack Up (L)",
-                "attack-up-xl": "Attack Up (XL)",
+                "attack-up-s": "Attack Up +S",
+                "attack-up-m": "Attack Up +M",
+                "attack-up-l": "Attack Up +L",
+                "attack-up-xl": "Attack Up +XL",
                 "critical-eye-1": "Critical Eye +1",
                 "critical-eye-2": "Critical Eye +2",
                 "critical-eye-3": "Critical Eye +3",
-                "critical-god": "Critical God",
+                "critical-eye-god": "Critical Eye +God",
                 "normal-up": "Normal Up",
                 "pellet-up": "Pellet Up",
                 "pierce-up": "Pierce Up",
@@ -162,18 +162,44 @@ function addResult(data, weapon) {
 
 function setSkills(weapon) {
     function addSkillsElems(skills, id) {
+        var groups = {};
         for (var key in skills) {
+            var group;
+            var groupName = skills[key];
+            var idx = groupName.indexOf("+");
+            if (idx >= 0) {
+                var groupName = groupName.substr(0, idx);
+            }
+
+            if (groups[groupName] !== undefined) {
+                group = groups[groupName];
+            } else {
+                group = document.createElement("div");
+                group.classList.add("form-group", "btn-group", "full-width");
+                group.setAttribute("data-toggle", "buttons");
+                if (idx >= 0) {
+                    var label = document.createElement("label");
+                    label.classList.add("btn", "btn-default");
+                    label.setAttribute("disabled", "");
+                    label.appendChild(document.createTextNode(groupName));
+                    group.appendChild(label);
+                }
+
+                document.getElementById(id).appendChild(group);
+                groups[groupName] = group;
+            }
+
             var label = document.createElement("label");
-            label.classList.add("btn");
-            label.classList.add("btn-default");
+            label.classList.add("btn", "btn-default");
             var input = document.createElement("input");
             input.setAttribute("type", "checkbox");
             input.setAttribute("form", "comparator");
             input.setAttribute("name", "skills");
             input.setAttribute("value", key);
+            input.setAttribute("autocomplete", "off");
             label.appendChild(input);
-            label.appendChild(document.createTextNode(skills[key]));
-            document.getElementById(id).appendChild(label);
+            label.appendChild(document.createTextNode(idx >= 0 ? skills[key].substr(idx) : skills[key]));
+            group.appendChild(label);
         }
     }
 
