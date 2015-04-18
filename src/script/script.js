@@ -1,21 +1,62 @@
-var ResultFieldsBow = {
-    "rank": "Rank",
-    "bow": "Bow",
-    "htk": "HtK",
-    "ctk": "CtK",
-    "avg_dph": "Avg DpH",
-    "dpc": "DpC",
-    "split": "Split",
-    "element": "Element",
-    "coat_use": "Coat Use",
-    "shot_info": "Shot Info"
-};
+var CurrentWeapon;
+
+var Weapons = {
+    "bow": {
+        resultFields: {
+            "rank": "Rank",
+            "bow": "Bow",
+            "htk": "HtK",
+            "ctk": "CtK",
+            "avg_dph": "Avg DpH",
+            "dpc": "DpC",
+            "split": "Split",
+            "element": "Element",
+            "coat_use": "Coat Use",
+            "shot_info": "Shot Info"
+        },
+        skills: {
+            general: {
+                "attack-up-s": "Attack Up (S)",
+                "attack-up-m": "Attack Up (M)",
+                "attack-up-l": "Attack Up (L)",
+                "attack-up-xl": "Attack Up (XL)",
+                "critical-eye-1": "Critical Eye +1",
+                "critical-eye-2": "Critical Eye +2",
+                "critical-eye-3": "Critical Eye +3",
+                "critical-god": "Critical God",
+                "normal-up": "Normal Up",
+                "pellet-up": "Pellet Up",
+                "pierce-up": "Pierce Up",
+                "weakness-exploit": "Weakness Exploit"
+            },
+            misc: {
+                "awaken": "Awaken",
+                "load-up": "Load Up",
+                "load-up-2-charge": "Load Up (natural 2-charge)",
+                "use-c-range-c": "Use C.Range C",
+                "use-power-c": "Use Power C"
+            }
+        }
+    }
+}
 
 var Monsters = {
-    "great-jaggi": "Great Jaggi",
-    "seltas": "Seltas",
-    "nerscylla": "Nerscylla",
-    "rathian": "Rathian"
+    "great-jaggi": {
+        "name": "Great Jaggi",
+        "hp": "2600"
+    },
+    "seltas": {
+        "name": "Seltas",
+        "hp": "2000"
+    },
+    "nerscylla": {
+        "name": "Nerscylla",
+        "hp": "3900"
+    },
+    "rathian": {
+        "name": "Rathian",
+        "hp": "4500"
+    }
 };
 
 var SkillsElemental = {
@@ -36,48 +77,16 @@ var SkillsElemental = {
     "water-atk-3": "Water Attack +3",
 };
 
-var SkillsBow = {
-    general: {
-        "attack-up-s": "Attack Up (S)",
-        "attack-up-m": "Attack Up (M)",
-        "attack-up-l": "Attack Up (L)",
-        "attack-up-xl": "Attack Up (XL)",
-        "critical-eye-1": "Critical Eye +1",
-        "critical-eye-2": "Critical Eye +2",
-        "critical-eye-3": "Critical Eye +3",
-        "critical-god": "Critical God",
-        "normal-up": "Normal Up",
-        "pellet-up": "Pellet Up",
-        "pierce-up": "Pierce Up",
-        "weakness-exploit": "Weakness Exploit"
-    },
-    misc: {
-        "awaken": "Awaken",
-        "load-up": "Load Up",
-        "load-up-2-charge": "Load Up (natural 2-charge)",
-        "use-c-range-c": "Use C.Range C",
-        "use-power-c": "Use Power C"
-    }
+window.onload = function() {
+    setCurrentWeapon(Weapons.bow);
+    setMonsters();
 };
 
-window.onload = function() {
-    addSkills("bow");
-    addMonsters();
-    addResultHeadings("bow");
-    addResult({
-        "rank": "1",
-        "bow": "Ukanlos Skyflier",
-        "htk": "51",
-        "ctk": "204",
-        "avg_dph": "124",
-        "dpc": "31",
-        "split": "96/4",
-        "element": "ice",
-        "coat_use": "P:51/C:0/N:0",
-        "shot_info": "Lv4 Rapid 5"
-    }, "bow");
-    $("#results").DataTable();
-};
+function setCurrentWeapon(weapon) {
+    CurrentWeapon = weapon;
+    setSkills(weapon);
+    setResultFields(weapon);
+}
 
 document.forms.comparator.onsubmit = function(e) {
     e.preventDefault();
@@ -90,66 +99,68 @@ document.forms.comparator.onsubmit = function(e) {
                 break;
         }
     }
+
+    clearResults();
+    addResult({
+        "rank": "1",
+        "bow": "Ukanlos Skyflier",
+        "htk": "51",
+        "ctk": "204",
+        "avg_dph": "124",
+        "dpc": "31",
+        "split": "96/4",
+        "element": "ice",
+        "coat_use": "P:51/C:0/N:0",
+        "shot_info": "Lv4 Rapid 5"
+    }, "bow");
+
+    showResults(true);
     console.log(formData);
 };
 
-function setResultMonster(monster) {
-    $("#results-monster").empty();
-    document.getElementById("results-monster").appendChild(document.createTextNode(monster));
+function showResults(show) {
+    var resultsContainer = document.getElementById("results-container")
+    if (show) {
+        $("#results").DataTable().draw();
+        resultsContainer.classList.remove("hidden")
+    } else {
+        resultsContainer.classList.add("hidden")
+    }
 }
 
-function addResultHeadings(weapon) {
-    var fields;
-    switch (weapon) {
-        case "bow":
-            fields = ResultFieldsBow;
-            break;
-        // extend for other weapons here later
+function setResultMonster(monster) {
+    var resultsMonster = document.getElementById("results-monster");
+    $(resultsMonster).empty();
+    var small = document.createElement("small");
+    small.appendChild(document.createTextNode(monster.hp + " HP"));
+    resultsMonster.appendChild(document.createTextNode(monster.name + " "));
+    resultsMonster.appendChild(small);
+}
+
+function setResultFields(weapon) {
+    var fields = weapon.resultFields;
+    var columns = [];
+    for (var key in fields) {
+        columns.push({
+            data: key,
+            title: fields[key]
+        });
     }
 
-    var table = document.getElementById("results");
-    var trHead = document.createElement("tr");
-    var trFoot = document.createElement("tr");
-    for (var key in fields) {
-        var thHead = document.createElement("th");
-        var thFoot = document.createElement("th");
-        thHead.appendChild(document.createTextNode(fields[key]));
-        thFoot.appendChild(document.createTextNode(fields[key]));
-        trHead.appendChild(thHead);
-        trFoot.appendChild(thFoot);
-    }
-    table.tHead.appendChild(trHead);
-    table.tFoot.appendChild(trFoot);
+    $("#results").DataTable({
+        columns: columns,
+    });
+}
+
+function clearResults() {
+    $("#results").DataTable().clear();
 }
 
 function addResult(data, weapon) {
-    var fields;
-    switch (weapon) {
-        case "bow":
-            fields = ResultFieldsBow;
-            break;
-        // extend for other weapons here later
-    }
-
-    var table = document.getElementById("results");
-    var tr = document.createElement("tr");
-    for (var key in fields) {
-        var td = document.createElement("td");
-        td.appendChild(document.createTextNode(data[key]));
-        tr.appendChild(td);
-    }
-    table.tBodies[0].appendChild(tr);
+    $("#results").DataTable().row.add(data);
 }
 
-function addSkills(weapon) {
-    var skillsWeapon;
-    switch (weapon) {
-        case "bow":
-            skillsWeapon = SkillsBow;
-            break;
-        // extend for other weapons here later
-    }
-
+function setSkills(weapon) {
     function addSkillsElems(skills, id) {
         for (var key in skills) {
             var label = document.createElement("label");
@@ -170,16 +181,16 @@ function addSkills(weapon) {
     $("#skills-general").empty();
     $("#skills-misc").empty();
     addSkillsElems(SkillsElemental, "skills-elemental");
-    addSkillsElems(skillsWeapon.general, "skills-general");
-    addSkillsElems(skillsWeapon.misc, "skills-misc");
+    addSkillsElems(weapon.skills.general, "skills-general");
+    addSkillsElems(weapon.skills.misc, "skills-misc");
 }
 
-function addMonsters() {
+function setMonsters() {
     var select = document.getElementById("comparator-monster");
     $(select).empty();
     for (var key in Monsters) {
         var option = document.createElement("option");
-        var optionText = document.createTextNode(Monsters[key]);
+        var optionText = document.createTextNode(Monsters[key].name);
         option.setAttribute("value", key);
         option.appendChild(optionText);
         select.appendChild(option);
