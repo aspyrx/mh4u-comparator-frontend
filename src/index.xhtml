@@ -14,7 +14,7 @@
         </div>
     </div>
 </div>
-<form id="form-comparator">
+<form id="comparator" name="comparator">
     <div class="container panel panel-default">
         <div class="panel-body">
             <div class="row equal-height-container">
@@ -29,32 +29,28 @@
                     </div>
                 </div>
                 <div class="col-sm-4 equal-height form-group">
-                    <label for="skills-msc">Miscellaneous Skills</label>
+                    <label for="skills-misc">Miscellaneous Skills</label>
                     <div id="skills-misc">
                     </div>
                 </div>
             </div>
             <div class="row text-center">
                 <div class="col-sm-6 form-group">
-                    <label for="bow-bias">Bow Selection Bias</label>
+                    <label for="bowSelectionBias">Bow Selection Bias</label>
                     <div>
                         <label class="radio-inline">
-                                <input type="radio" name="bow-selection-bias" value="dpc" checked="" />
+                                <input type="radio" form="comparator" name="bowSelectionBias" value="dpc" checked="" />
                                 Best DpC
                         </label>
                         <label class="radio-inline">
-                                <input type="radio" name="bow-selection-bias" value="dph" />
+                                <input type="radio" form="comparator" name="bowSelectionBias" value="dph" />
                                 Best DpH
                         </label>
                     </div>
                 </div>
                 <div class="col-sm-6 form-group">
                     <label for="comparator-monster">Monster</label>
-                    <select id="comparator-monster" class="form-control">
-                        <option>Great Jaggi</option>
-                        <option>Seltas</option>
-                        <option>Nerscylla</option>
-                        <option>Rathian</option>
+                    <select form="comparator" name="monster" id="comparator-monster" class="form-control">
                     </select>
                 </div>
             </div>

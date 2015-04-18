@@ -1,6 +1,13 @@
 window.onload = function() {
-    addSkills("bow")
+    addSkills("bow");
+    addMonsters();
 };
+
+document.forms.comparator.onsubmit = function(e) {
+    e.preventDefault();
+    var formData = $(e.target).serializeArray();
+    console.log(formData);
+}
 
 function addSkills(weapon) {
     var skillsElemental = {
@@ -18,7 +25,7 @@ function addSkills(weapon) {
         "thunder-atk-3": "Thunder Attack +3",
         "water-atk-1": "Water Attack +1",
         "water-atk-2": "Water Attack +2",
-        "water-atk-3": "Water Attack +3", 
+        "water-atk-3": "Water Attack +3",
     };
     var skillsBow = {
         general: {
@@ -60,6 +67,7 @@ function addSkills(weapon) {
             var input = document.createElement("input");
             var labelText = document.createTextNode(skills[key]);
             input.setAttribute("type", "checkbox");
+            input.setAttribute("form", "comparator");
             input.setAttribute("name", "skills");
             input.setAttribute("value", key);
             label.appendChild(input);
@@ -72,4 +80,21 @@ function addSkills(weapon) {
     addSkillsElems(skillsElemental, "skills-elemental");
     addSkillsElems(skillsWeapon.general, "skills-general");
     addSkillsElems(skillsWeapon.misc, "skills-misc");
+}
+
+function addMonsters() {
+    var monsters = {
+        "great-jaggi": "Great Jaggi",
+        "seltas": "Seltas",
+        "nerscylla": "Nerscylla",
+        "rathian": "Rathian"
+    }
+
+    for (var key in monsters) {
+        var option = document.createElement("option");
+        var optionText = document.createTextNode(monsters[key]);
+        option.setAttribute("value", key);
+        option.appendChild(optionText);
+        document.getElementById("comparator-monster").appendChild(option);
+    }
 }
