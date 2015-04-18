@@ -200,6 +200,18 @@ function setSkills(weapon) {
             label.appendChild(input);
             label.appendChild(document.createTextNode(idx >= 0 ? skills[key].substr(idx) : skills[key]));
             group.appendChild(label);
+
+            $(label).click(function() {
+                if (!this.classList.contains("active")) {
+                    var $siblings = $(this).siblings();
+                    for (var i = 0; i < $siblings.length; i++) {
+                        var sibling = $siblings[i];
+                        if (sibling.classList.contains("active")) {
+                            $(sibling).button("toggle");
+                        }
+                    }
+                }
+            });
         }
     }
 
