@@ -90,32 +90,38 @@ function setCurrentWeapon(weapon) {
 
 document.forms.comparator.onsubmit = function(e) {
     e.preventDefault();
+    $("#comparator-submit").button("loading");
     var formData = $(e.target).serializeArray();
-    for (i = 0; i < formData.length; i++) {
-        var data = formData[i];
-        switch (data.name) {
-            case "monster":
-                setResultMonster(Monsters[data.value]);
-                break;
+
+    // pretend an ajax request is happening
+    window.setTimeout(function() {
+        for (i = 0; i < formData.length; i++) {
+            var data = formData[i];
+            switch (data.name) {
+                case "monster":
+                    setResultMonster(Monsters[data.value]);
+                    break;
+            }
         }
-    }
 
-    clearResults();
-    addResult({
-        "rank": "1",
-        "bow": "Ukanlos Skyflier",
-        "htk": "51",
-        "ctk": "204",
-        "avg_dph": "124",
-        "dpc": "31",
-        "split": "96/4",
-        "element": "ice",
-        "coat_use": "P:51/C:0/N:0",
-        "shot_info": "Lv4 Rapid 5"
-    }, "bow");
+        clearResults();
+        addResult({
+            "rank": "1",
+            "bow": "Ukanlos Skyflier",
+            "htk": "51",
+            "ctk": "204",
+            "avg_dph": "124",
+            "dpc": "31",
+            "split": "96/4",
+            "element": "ice",
+            "coat_use": "P:51/C:0/N:0",
+            "shot_info": "Lv4 Rapid 5"
+        }, "bow");
 
-    showResults(true);
-    console.log(formData);
+        $("#comparator-submit").blur().button("reset");
+        showResults(true);
+        console.log(formData);
+    }, 1500);
 };
 
 function showResults(show) {
