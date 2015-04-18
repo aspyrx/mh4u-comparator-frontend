@@ -11,6 +11,55 @@ var ResultFieldsBow = {
     "shot_info": "Shot Info"
 };
 
+var Monsters = {
+    "great-jaggi": "Great Jaggi",
+    "seltas": "Seltas",
+    "nerscylla": "Nerscylla",
+    "rathian": "Rathian"
+};
+
+var SkillsElemental = {
+    "dragon-atk-1": "Dragon Attack +1",
+    "dragon-atk-2": "Dragon Attack +2",
+    "dragon-atk-3": "Dragon Attack +3",
+    "fire-atk-1": "Fire Attack +1",
+    "fire-atk-2": "Fire Attack +2",
+    "fire-atk-3": "Fire Attack +3",
+    "ice-atk-1": "Ice Attack +1",
+    "ice-atk-2": "Ice Attack +2",
+    "ice-atk-3": "Ice Attack +3",
+    "thunder-atk-1": "Thunder Attack +1",
+    "thunder-atk-2": "Thunder Attack +2",
+    "thunder-atk-3": "Thunder Attack +3",
+    "water-atk-1": "Water Attack +1",
+    "water-atk-2": "Water Attack +2",
+    "water-atk-3": "Water Attack +3",
+};
+
+var SkillsBow = {
+    general: {
+        "attack-up-s": "Attack Up (S)",
+        "attack-up-m": "Attack Up (M)",
+        "attack-up-l": "Attack Up (L)",
+        "attack-up-xl": "Attack Up (XL)",
+        "critical-eye-1": "Critical Eye +1",
+        "critical-eye-2": "Critical Eye +2",
+        "critical-eye-3": "Critical Eye +3",
+        "critical-god": "Critical God",
+        "normal-up": "Normal Up",
+        "pellet-up": "Pellet Up",
+        "pierce-up": "Pierce Up",
+        "weakness-exploit": "Weakness Exploit"
+    },
+    misc: {
+        "awaken": "Awaken",
+        "load-up": "Load Up",
+        "load-up-2-charge": "Load Up (natural 2-charge)",
+        "use-c-range-c": "Use C.Range C",
+        "use-power-c": "Use Power C"
+    }
+};
+
 window.onload = function() {
     addSkills("bow");
     addMonsters();
@@ -33,8 +82,21 @@ window.onload = function() {
 document.forms.comparator.onsubmit = function(e) {
     e.preventDefault();
     var formData = $(e.target).serializeArray();
+    for (i = 0; i < formData.length; i++) {
+        var data = formData[i];
+        switch (data.name) {
+            case "monster":
+                setResultMonster(Monsters[data.value]);
+                break;
+        }
+    }
     console.log(formData);
 };
+
+function setResultMonster(monster) {
+    $("#results-monster").empty();
+    document.getElementById("results-monster").appendChild(document.createTextNode(monster));
+}
 
 function addResultHeadings(weapon) {
     var fields;
@@ -79,48 +141,6 @@ function addResult(data, weapon) {
     table.tBodies[0].appendChild(tr);
 }
 
-var SkillsElemental = {
-    "dragon-atk-1": "Dragon Attack +1",
-    "dragon-atk-2": "Dragon Attack +2",
-    "dragon-atk-3": "Dragon Attack +3",
-    "fire-atk-1": "Fire Attack +1",
-    "fire-atk-2": "Fire Attack +2",
-    "fire-atk-3": "Fire Attack +3",
-    "ice-atk-1": "Ice Attack +1",
-    "ice-atk-2": "Ice Attack +2",
-    "ice-atk-3": "Ice Attack +3",
-    "thunder-atk-1": "Thunder Attack +1",
-    "thunder-atk-2": "Thunder Attack +2",
-    "thunder-atk-3": "Thunder Attack +3",
-    "water-atk-1": "Water Attack +1",
-    "water-atk-2": "Water Attack +2",
-    "water-atk-3": "Water Attack +3",
-};
-
-var SkillsBow = {
-    general: {
-        "attack-up-s": "Attack Up (S)",
-        "attack-up-m": "Attack Up (M)",
-        "attack-up-l": "Attack Up (L)",
-        "attack-up-xl": "Attack Up (XL)",
-        "critical-eye-1": "Critical Eye +1",
-        "critical-eye-2": "Critical Eye +2",
-        "critical-eye-3": "Critical Eye +3",
-        "critical-god": "Critical God",
-        "normal-up": "Normal Up",
-        "pellet-up": "Pellet Up",
-        "pierce-up": "Pierce Up",
-        "weakness-exploit": "Weakness Exploit"
-    },
-    misc: {
-        "awaken": "Awaken",
-        "load-up": "Load Up",
-        "load-up-2-charge": "Load Up (natural 2-charge)",
-        "use-c-range-c": "Use C.Range C",
-        "use-power-c": "Use Power C"
-    }
-};
-
 function addSkills(weapon) {
     var skillsWeapon;
     switch (weapon) {
@@ -147,24 +167,22 @@ function addSkills(weapon) {
         }
     }
 
+    $("#skills-elemental").empty();
+    $("#skills-general").empty();
+    $("#skills-misc").empty();
     addSkillsElems(SkillsElemental, "skills-elemental");
     addSkillsElems(skillsWeapon.general, "skills-general");
     addSkillsElems(skillsWeapon.misc, "skills-misc");
 }
 
 function addMonsters() {
-    var monsters = {
-        "great-jaggi": "Great Jaggi",
-        "seltas": "Seltas",
-        "nerscylla": "Nerscylla",
-        "rathian": "Rathian"
-    }
-
-    for (var key in monsters) {
+    var select = document.getElementById("comparator-monster");
+    $(select).empty();
+    for (var key in Monsters) {
         var option = document.createElement("option");
-        var optionText = document.createTextNode(monsters[key]);
+        var optionText = document.createTextNode(Monsters[key]);
         option.setAttribute("value", key);
         option.appendChild(optionText);
-        document.getElementById("comparator-monster").appendChild(option);
+        select.appendChild(option);
     }
 }
