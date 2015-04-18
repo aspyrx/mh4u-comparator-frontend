@@ -16,33 +16,21 @@
 </div>
 <form id="form-comparator">
     <div class="container">
-        <hr />
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <h2>Skills</h2>
-            </div>
-            <div id="bow-general" class="col-sm-4 form-group">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="skills" value="attack-up-l" />
-                        Attack Up (L)
-                    </label>
+        <hr /> 
+        <div class="row equal-height-container">
+            <div class="col-sm-4 equal-height form-group-skills">
+                <label for="skills-general">General Skills</label>
+                <div id="skills-general">
                 </div>
             </div>
-            <div id="bow-elemental" class="col-sm-4 form-group">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="skills" value="dragon-atk-1" />
-                        Dragon Atk +1
-                    </label>
+            <div class="col-sm-4 equal-height form-group-skills">
+                <label for="skills-elemental">Elemental Skills</label>
+                <div id="skills-elemental">
                 </div>
             </div>
-            <div id="bow-misc" class="col-sm-4 form-group">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="skills" value="awaken" />
-                        Awaken
-                    </label>
+            <div class="col-sm-4 equal-height form-group-skills">
+                <label for="skills-msc">Miscellaneous Skills</label>
+                <div id="skills-misc">
                 </div>
             </div>
         </div>
@@ -72,7 +60,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 form-group">
-                <input type="submit" value="Fight!" class="btn btn-primary btn-lg center-block full-width" />
+                <input type="submit" value="Fight!" class="btn btn-primary btn-lg full-width" />
             </div>
         </div>
         <hr />
