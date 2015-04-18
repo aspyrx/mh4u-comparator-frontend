@@ -15,55 +15,55 @@
     </div>
 </div>
 <form id="form-comparator">
-    <div class="container">
-        <hr /> 
-        <div class="row equal-height-container">
-            <div class="col-sm-4 equal-height form-group-skills">
-                <label for="skills-general">General Skills</label>
-                <div id="skills-general">
+    <div class="container panel panel-default">
+        <div class="panel-body">
+            <div class="row equal-height-container">
+                <div class="col-sm-4 equal-height form-group">
+                    <label for="skills-general">General Skills</label>
+                    <div id="skills-general">
+                    </div>
+                </div>
+                <div class="col-sm-4 equal-height form-group">
+                    <label for="skills-elemental">Elemental Skills</label>
+                    <div id="skills-elemental">
+                    </div>
+                </div>
+                <div class="col-sm-4 equal-height form-group">
+                    <label for="skills-msc">Miscellaneous Skills</label>
+                    <div id="skills-misc">
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4 equal-height form-group-skills">
-                <label for="skills-elemental">Elemental Skills</label>
-                <div id="skills-elemental">
+            <div class="row text-center">
+                <div class="col-sm-6 form-group">
+                    <label for="bow-bias">Bow Selection Bias</label>
+                    <div>
+                        <label class="radio-inline">
+                                <input type="radio" name="bow-selection-bias" value="dpc" checked="" />
+                                Best DpC
+                        </label>
+                        <label class="radio-inline">
+                                <input type="radio" name="bow-selection-bias" value="dph" />
+                                Best DpH
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="comparator-monster">Monster</label>
+                    <select id="comparator-monster" class="form-control">
+                        <option>Great Jaggi</option>
+                        <option>Seltas</option>
+                        <option>Nerscylla</option>
+                        <option>Rathian</option>
+                    </select>
                 </div>
             </div>
-            <div class="col-sm-4 equal-height form-group-skills">
-                <label for="skills-msc">Miscellaneous Skills</label>
-                <div id="skills-misc">
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    <input type="submit" value="Fight!" class="btn btn-primary btn-lg full-width" />
                 </div>
             </div>
         </div>
-        <div class="row text-center">
-            <div class="col-sm-6 form-group">
-                <label for="bow-bias">Bow Selection Bias</label>
-                <div>
-                    <label class="radio-inline">
-                            <input type="radio" name="bow-selection-bias" value="dpc" checked="" />
-                            Best DpC
-                    </label>
-                    <label class="radio-inline">
-                            <input type="radio" name="bow-selection-bias" value="dph" />
-                            Best DpH
-                    </label>
-                </div>
-            </div>
-            <div class="col-sm-6 form-group">
-                <label for="comparator-monster">Monster</label>
-                <select id="comparator-monster" class="form-control">
-                    <option>Great Jaggi</option>
-                    <option>Seltas</option>
-                    <option>Nerscylla</option>
-                    <option>Rathian</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 form-group">
-                <input type="submit" value="Fight!" class="btn btn-primary btn-lg full-width" />
-            </div>
-        </div>
-        <hr />
     </div>
 </form>
 <div class="container-fluid">
