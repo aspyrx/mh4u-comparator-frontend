@@ -152,9 +152,9 @@ function addSkills(weapon) {
 
     function addSkillsElems(skills, id) {
         for (var key in skills) {
-            var div = document.createElement("div");
-            div.classList.add("checkbox");
             var label = document.createElement("label");
+            label.classList.add("btn");
+            label.classList.add("btn-default");
             var input = document.createElement("input");
             input.setAttribute("type", "checkbox");
             input.setAttribute("form", "comparator");
@@ -162,8 +162,7 @@ function addSkills(weapon) {
             input.setAttribute("value", key);
             label.appendChild(input);
             label.appendChild(document.createTextNode(skills[key]));
-            div.appendChild(label);
-            document.getElementById(id).appendChild(div);
+            document.getElementById(id).appendChild(label);
         }
     }
 
