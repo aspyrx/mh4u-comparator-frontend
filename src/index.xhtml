@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style/style.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.css" />
 </head>
 <body>
 <div class="container">
@@ -38,14 +39,16 @@
                 <div class="col-sm-6 form-group">
                     <label for="bowSelectionBias">Bow Selection Bias</label>
                     <div>
-                        <label class="radio-inline">
-                                <input type="radio" form="comparator" name="bowSelectionBias" value="dpc" checked="" />
-                                Best DpC
-                        </label>
-                        <label class="radio-inline">
-                                <input type="radio" form="comparator" name="bowSelectionBias" value="dph" />
-                                Best DpH
-                        </label>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-default active">
+                                    <input type="radio" form="comparator" name="bowSelectionBias" value="dpc" autocomplete="off" checked="" />
+                                    Best DpC
+                            </label>
+                            <label class="btn btn-default">
+                                    <input type="radio" form="comparator" name="bowSelectionBias" value="dph" autocomplete="off" />
+                                    Best DpH
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 form-group">
@@ -62,9 +65,19 @@
         </div>
     </div>
 </form>
-<div class="container-fluid">
+<div class="container">
+    <table id="results" class="table table-striped table-bordered table-condensed table-responsive">
+        <thead>
+        </thead>
+        <tfoot>
+        </tfoot>
+        <tbody>
+        </tbody>
+    </table>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.6/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="script/script.js"></script>
 </body>

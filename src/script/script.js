@@ -1,60 +1,131 @@
+var ResultFieldsBow = {
+    "rank": "Rank",
+    "bow": "Bow",
+    "htk": "HtK",
+    "ctk": "CtK",
+    "avg_dph": "Avg DpH",
+    "dpc": "DpC",
+    "split": "Split",
+    "element": "Element",
+    "coat_use": "Coat Use",
+    "shot_info": "Shot Info"
+};
+
 window.onload = function() {
     addSkills("bow");
     addMonsters();
+    addResultHeadings("bow");
+    addResult({
+        "rank": "1",
+        "bow": "Ukanlos Skyflier",
+        "htk": "51",
+        "ctk": "204",
+        "avg_dph": "124",
+        "dpc": "31",
+        "split": "96/4",
+        "element": "ice",
+        "coat_use": "P:51/C:0/N:0",
+        "shot_info": "Lv4 Rapid 5"
+    }, "bow");
+    $("#results").DataTable();
 };
 
 document.forms.comparator.onsubmit = function(e) {
     e.preventDefault();
     var formData = $(e.target).serializeArray();
     console.log(formData);
+};
+
+function addResultHeadings(weapon) {
+    var fields;
+    switch (weapon) {
+        case "bow":
+            fields = ResultFieldsBow;
+            break;
+        // extend for other weapons here later
+    }
+
+    var table = document.getElementById("results");
+    var trHead = document.createElement("tr");
+    var trFoot = document.createElement("tr");
+    for (var key in fields) {
+        var thHead = document.createElement("th");
+        var thFoot = document.createElement("th");
+        thHead.appendChild(document.createTextNode(fields[key]));
+        thFoot.appendChild(document.createTextNode(fields[key]));
+        trHead.appendChild(thHead);
+        trFoot.appendChild(thFoot);
+    }
+    table.tHead.appendChild(trHead);
+    table.tFoot.appendChild(trFoot);
 }
 
-function addSkills(weapon) {
-    var skillsElemental = {
-        "dragon-atk-1": "Dragon Attack +1",
-        "dragon-atk-2": "Dragon Attack +2",
-        "dragon-atk-3": "Dragon Attack +3",
-        "fire-atk-1": "Fire Attack +1",
-        "fire-atk-2": "Fire Attack +2",
-        "fire-atk-3": "Fire Attack +3",
-        "ice-atk-1": "Ice Attack +1",
-        "ice-atk-2": "Ice Attack +2",
-        "ice-atk-3": "Ice Attack +3",
-        "thunder-atk-1": "Thunder Attack +1",
-        "thunder-atk-2": "Thunder Attack +2",
-        "thunder-atk-3": "Thunder Attack +3",
-        "water-atk-1": "Water Attack +1",
-        "water-atk-2": "Water Attack +2",
-        "water-atk-3": "Water Attack +3",
-    };
-    var skillsBow = {
-        general: {
-            "attack-up-s": "Attack Up (S)",
-            "attack-up-m": "Attack Up (M)",
-            "attack-up-l": "Attack Up (L)",
-            "attack-up-xl": "Attack Up (XL)",
-            "critical-eye-1": "Critical Eye +1",
-            "critical-eye-2": "Critical Eye +2",
-            "critical-eye-3": "Critical Eye +3",
-            "critical-god": "Critical God",
-            "normal-up": "Normal Up",
-            "pellet-up": "Pellet Up",
-            "pierce-up": "Pierce Up",
-            "weakness-exploit": "Weakness Exploit"
-        },
-        misc: {
-            "awaken": "Awaken",
-            "load-up": "Load Up",
-            "load-up-2-charge": "Load Up (natural 2-charge)",
-            "use-c-range-c": "Use C.Range C",
-            "use-power-c": "Use Power C"
-        }
-    };
+function addResult(data, weapon) {
+    var fields;
+    switch (weapon) {
+        case "bow":
+            fields = ResultFieldsBow;
+            break;
+        // extend for other weapons here later
+    }
 
+    var table = document.getElementById("results");
+    var tr = document.createElement("tr");
+    for (var key in fields) {
+        var td = document.createElement("td");
+        td.appendChild(document.createTextNode(data[key]));
+        tr.appendChild(td);
+    }
+    table.tBodies[0].appendChild(tr);
+}
+
+var SkillsElemental = {
+    "dragon-atk-1": "Dragon Attack +1",
+    "dragon-atk-2": "Dragon Attack +2",
+    "dragon-atk-3": "Dragon Attack +3",
+    "fire-atk-1": "Fire Attack +1",
+    "fire-atk-2": "Fire Attack +2",
+    "fire-atk-3": "Fire Attack +3",
+    "ice-atk-1": "Ice Attack +1",
+    "ice-atk-2": "Ice Attack +2",
+    "ice-atk-3": "Ice Attack +3",
+    "thunder-atk-1": "Thunder Attack +1",
+    "thunder-atk-2": "Thunder Attack +2",
+    "thunder-atk-3": "Thunder Attack +3",
+    "water-atk-1": "Water Attack +1",
+    "water-atk-2": "Water Attack +2",
+    "water-atk-3": "Water Attack +3",
+};
+
+var SkillsBow = {
+    general: {
+        "attack-up-s": "Attack Up (S)",
+        "attack-up-m": "Attack Up (M)",
+        "attack-up-l": "Attack Up (L)",
+        "attack-up-xl": "Attack Up (XL)",
+        "critical-eye-1": "Critical Eye +1",
+        "critical-eye-2": "Critical Eye +2",
+        "critical-eye-3": "Critical Eye +3",
+        "critical-god": "Critical God",
+        "normal-up": "Normal Up",
+        "pellet-up": "Pellet Up",
+        "pierce-up": "Pierce Up",
+        "weakness-exploit": "Weakness Exploit"
+    },
+    misc: {
+        "awaken": "Awaken",
+        "load-up": "Load Up",
+        "load-up-2-charge": "Load Up (natural 2-charge)",
+        "use-c-range-c": "Use C.Range C",
+        "use-power-c": "Use Power C"
+    }
+};
+
+function addSkills(weapon) {
     var skillsWeapon;
     switch (weapon) {
         case "bow":
-            skillsWeapon = skillsBow;
+            skillsWeapon = SkillsBow;
             break;
         // extend for other weapons here later
     }
@@ -65,19 +136,18 @@ function addSkills(weapon) {
             div.classList.add("checkbox");
             var label = document.createElement("label");
             var input = document.createElement("input");
-            var labelText = document.createTextNode(skills[key]);
             input.setAttribute("type", "checkbox");
             input.setAttribute("form", "comparator");
             input.setAttribute("name", "skills");
             input.setAttribute("value", key);
             label.appendChild(input);
-            label.appendChild(labelText);
+            label.appendChild(document.createTextNode(skills[key]));
             div.appendChild(label);
             document.getElementById(id).appendChild(div);
         }
     }
 
-    addSkillsElems(skillsElemental, "skills-elemental");
+    addSkillsElems(SkillsElemental, "skills-elemental");
     addSkillsElems(skillsWeapon.general, "skills-general");
     addSkillsElems(skillsWeapon.misc, "skills-misc");
 }
